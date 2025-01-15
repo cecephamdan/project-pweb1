@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script>
+      function validateLogin(event) {
+        event.preventDefault();
+
+        const actor = document.querySelector('input[name="actor"]:checked').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const credentials = {
+          admin: { username: 'cecephamdan', password: '190405' },
+          konsumen: { username: 'konsumen123', password: '123' }
+        };
+
+        if (
+          username === credentials[actor].username &&
+          password === credentials[actor].password
+        ) {
+          alert(`Login berhasil sebagai ${actor}!`);
+          window.location.href = actor === 'admin' ? 'admin.html' : 'tugas.html';
+        } else {
+          const alertBox = document.getElementById('alert-box');
+          alertBox.textContent = 'Username atau password salah!';
+          alertBox.style.display = 'block';
+        }
+      }
+
+      function updatePlaceholder() {
+        const actor = document.querySelector('input[name="actor"]:checked').value;
+        const hintBox = document.getElementById('hint-box');
+        if (actor === 'admin') {
+          hintBox.textContent = 'Admin: Username: cecephamdan, Password: 190405';
+        } else {
+          hintBox.textContent = 'Konsumen: Username: konsumen123, Password: 123';
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-light">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+      <div class="card shadow" style="width: 25rem;">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Login</h3>
+          <div id="alert-box" class="alert alert-danger" style="display: none;" role="alert"></div>
+          <div class="mb-3">
+            <label class="form-label">Login Sebagai</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="actor" id="admin" value="admin" checked onchange="updatePlaceholder()">
+              <label class="form-check-label" for="admin">Admin</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="actor" id="konsumen" value="konsumen" onchange="updatePlaceholder()">
+              <label class="form-check-label" for="konsumen">Konsumen</label>
+            </div>
+          </div>
+          <p id="hint-box" class="text-muted mb-3">
+            Admin: Username: cecephamdan, Password: 190405
+          </p>
+          <form onsubmit="validateLogin(event)">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
